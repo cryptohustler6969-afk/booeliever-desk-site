@@ -44,6 +44,8 @@ async function start(raw, remember, kdf) {
     lock: () => { localStorage.removeItem(KEY_LS); Object.keys(localStorage).filter((k) => k.startsWith(STORE_PREFIX)).forEach((k) => localStorage.removeItem(k)); location.reload(); },
     installPrompt: () => installEvt,
   };
+  const lk = document.getElementById("lock");
+  if (lk && !matchMedia("(prefers-reduced-motion: reduce)").matches) { lk.classList.add("turn"); await new Promise((r) => setTimeout(r, 380)); }
   const style = document.createElement("style"); style.textContent = app.css; document.head.appendChild(style);
   document.querySelectorAll("head > style:not(:last-of-type)").forEach((s) => s.remove());
   document.title = "Booeliever Desk";
