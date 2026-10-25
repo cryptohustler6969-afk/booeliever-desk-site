@@ -32,6 +32,9 @@
   h1{font-family:"Cinzel",Georgia,serif;font-weight:700;letter-spacing:2px;font-size:22px;margin:16px 0 2px}
   .tag{font-family:"Cinzel",Georgia,serif;color:#9db0ff;letter-spacing:1.5px;font-size:13px;margin:0 0 6px;text-shadow:0 0 14px rgba(107,140,255,.5)}
   p{color:#a3a8d6;margin:0 0 18px;font-size:13px}
+  .owner{display:flex;align-items:center;justify-content:center;gap:9px;margin:10px 0 14px;font-size:13px;font-weight:600;color:#f6e7c1}
+  .owner img{border-radius:50%;object-fit:cover;box-shadow:0 0 0 1.5px #f2c46d,0 0 12px rgba(242,196,109,.35)}
+  .fan{margin-top:14px;font-size:11px;color:#7076a8}
   input[type=password]{width:100%;box-sizing:border-box;background:rgba(10,12,36,.75);color:#eef0ff;border:1px solid rgba(157,176,255,.3);border-radius:12px;padding:12px 14px;font:inherit;outline:none;transition:.2s}
   input[type=password]:focus{border-color:#9db0ff;box-shadow:0 0 0 3px rgba(107,140,255,.2),0 0 18px rgba(107,140,255,.3)}
   label{display:flex;gap:8px;align-items:center;justify-content:flex-start;color:#a3a8d6;font-size:13px;margin:12px 2px}
@@ -49,12 +52,14 @@
     <img src="icons/logo-256.png" alt="Booeliever logo" width="112" height="112" class="logo">
     <h1>Booeliever Desk</h1>
     <div class="tag">And so it begins… 📜🐸</div>
+    <div class="owner"><img src="icons/pfp-160.png" alt="" width="30" height="30">CryptoHustler6969 · trading bot</div>
     <p>Private. Enter the password to unlock.</p>
     <input type="text" name="username" value="booeliever" autocomplete="username" hidden>
     <input type="password" id="pw" autocomplete="current-password" placeholder="Password" required autofocus>
     <label><input type="checkbox" id="remember"> Remember on this device</label>
     <button id="unlock" type="submit">Unlock</button>
     <div class="err" id="err" role="alert"></div>
+    <div class="fan">Fan-made Book of Ethereum theme · not affiliated with BOOE</div>
   </form>
 </div>
 <script src="loader.js"></script>
