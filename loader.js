@@ -48,7 +48,7 @@ async function start(raw, remember, kdf) {
   if (lk && !matchMedia("(prefers-reduced-motion: reduce)").matches) { lk.classList.add("turn"); await new Promise((r) => setTimeout(r, 380)); }
   const style = document.createElement("style"); style.textContent = app.css; document.head.appendChild(style);
   document.querySelectorAll("head > style:not(:last-of-type)").forEach((s) => s.remove());
-  document.title = "Booeliever Desk";
+  document.title = "CryptoHustler6969 · Trading Desk";
   document.body.innerHTML = app.html;
   const url = URL.createObjectURL(new Blob([app.js], { type: "text/javascript" }));
   const sc = document.createElement("script"); sc.src = url; sc.onload = () => URL.revokeObjectURL(url); document.body.appendChild(sc);
