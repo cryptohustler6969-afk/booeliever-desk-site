@@ -41,7 +41,9 @@
   label{display:flex;gap:8px;align-items:center;justify-content:flex-start;color:#a8b8dc;font-size:13px;margin:12px 2px}
   input[type=checkbox]{accent-color:#f2b24c}
   button{width:100%;background:linear-gradient(90deg,#ffd98a,#f2b24c 55%,#ff9a4a);color:#1a1300;border:0;border-radius:12px;padding:12px;font:inherit;font-weight:650;letter-spacing:.5px;cursor:pointer;box-shadow:0 8px 24px rgba(242,178,76,.35)}
-  button:disabled{opacity:.6;cursor:wait} .err{color:#ff7a93;font-size:13px;min-height:18px;margin-top:10px}
+  button:disabled{opacity:.6;cursor:wait}
+  button.bio{margin-top:10px;background:rgba(74,163,255,.12);color:#cfe6ff;border:1px solid rgba(140,200,255,.45);box-shadow:0 0 18px rgba(74,163,255,.25)}
+  .note{color:#7487b5;font-size:11.5px;margin-top:12px} .err{color:#ff7a93;font-size:13px;min-height:18px;margin-top:10px}
   .lock.turn{animation:turn .45s ease-in forwards}
   @keyframes turn{to{opacity:0;transform:perspective(1400px) rotateY(12deg) translateX(14px)}}
   @media (prefers-reduced-motion:reduce){.lock.turn{animation:none}}
@@ -54,11 +56,12 @@
     <h1>CryptoHustler6969</h1>
     <div class="sub2">Trading Desk · Chapters, not tickers 📖⟠</div>
     <div class="tag">And so it begins… 📜🐸</div>
-    <p>Private. Enter the password to unlock.</p>
+    <p id="lock-msg">Private. Enter the password to unlock.</p>
     <input type="text" name="username" value="booeliever" autocomplete="username" hidden>
-    <input type="password" id="pw" autocomplete="current-password" placeholder="Password" required autofocus>
-    <label><input type="checkbox" id="remember"> Remember on this device</label>
+    <input type="password" id="pw" autocomplete="current-password" placeholder="Password" required autofocus style="margin-bottom:12px">
     <button id="unlock" type="submit">Unlock</button>
+    <button id="bio-btn" class="bio" type="button" hidden>☝ Unlock with fingerprint</button>
+    <div class="note">Locks itself when you close or leave the app.</div>
     <div class="err" id="err" role="alert"></div>
     <div class="fan">Fan-made Book of Ethereum theme · not affiliated with BOOE</div>
   </form>
