@@ -18,7 +18,10 @@ const $ = (id) => document.getElementById(id);
 
 let installEvt = null;
 addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); installEvt = e; dispatchEvent(new Event("bd-installable")); });
-if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
+const SHELL_BUILD = "0f1d0cc7";
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js", { updateViaCache: "none" }).then((r) => r.update()).catch(() => {});
+{ const m = / BooeDesk\/([0-9A-Za-z._-]{1,12})/.exec(navigator.userAgent), v = document.getElementById("ver");
+  if (v) v.textContent = (m ? "App v" + m[1] + " · " : "") + "Web " + SHELL_BUILD; }
 
 async function getKdf() { const r = await fetch("kdf.json", { cache: "no-cache" }); if (!r.ok) throw new Error("kdf"); return r.json(); }
 async function derive(pw, kdf) {
