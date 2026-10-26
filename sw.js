@@ -1,6 +1,6 @@
 // Caches only the public lock-screen shell. Encrypted files and anything else always come from the network;
 // no plaintext app data is ever cached (decryption happens in memory, in the page).
-const VERSION = "bd-lock-0f1d0cc7"; // changes with every lock-screen build
+const VERSION = "bd-lock-1d5471b0"; // changes with every lock-screen build
 const SHELL = ["./", "index.html", "loader.js", "sw.js", "manifest.webmanifest", "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png", "icons/logo-256.png", "icons/favicon-64.png", "icons/maskable-512.png", "fonts/inter-var-latin.woff2", "fonts/cinzel-var-latin.woff2"];
 self.addEventListener("install", (e) => { e.waitUntil(caches.open(VERSION).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", (e) => {

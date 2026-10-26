@@ -18,7 +18,7 @@ const $ = (id) => document.getElementById(id);
 
 let installEvt = null;
 addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); installEvt = e; dispatchEvent(new Event("bd-installable")); });
-const SHELL_BUILD = "0f1d0cc7";
+const SHELL_BUILD = "1d5471b0";
 if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js", { updateViaCache: "none" }).then((r) => r.update()).catch(() => {});
 { const m = / BooeDesk\/([0-9A-Za-z._-]{1,12})/.exec(navigator.userAgent), v = document.getElementById("ver");
   if (v) v.textContent = (m ? "App v" + m[1] + " · " : "") + "Web " + SHELL_BUILD; }
