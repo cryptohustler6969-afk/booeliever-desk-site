@@ -5,6 +5,8 @@
    In the Android app an optional fingerprint unlock goes through the app's origin-locked bridge. */
 "use strict";
 (() => {
+// the Android app opens "//<site path>/" in the phone's browser (outside its allow-list) for the APK download; tidy the URL here
+if (location.pathname.startsWith("//")) { location.replace("/" + location.pathname.replace(/^\/+/, "") + location.search + location.hash); return; }
 const OLD_KEY_LS = "bd_key_v2", STORE_PREFIX = "bd_enc_";
 // never keep a key between sessions: drop the old "remember on this device" key and old plaintext caches
 [OLD_KEY_LS, "bd_live_points_v1", "bd_last_prices_v1"].forEach((k) => localStorage.removeItem(k));
@@ -18,7 +20,7 @@ const $ = (id) => document.getElementById(id);
 
 let installEvt = null;
 addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); installEvt = e; dispatchEvent(new Event("bd-installable")); });
-const SHELL_BUILD = "1d5471b0";
+const SHELL_BUILD = "2e9def51";
 if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js", { updateViaCache: "none" }).then((r) => r.update()).catch(() => {});
 { const m = / BooeDesk\/([0-9A-Za-z._-]{1,12})/.exec(navigator.userAgent), v = document.getElementById("ver");
   if (v) v.textContent = (m ? "App v" + m[1] + " · " : "") + "Web " + SHELL_BUILD; }
@@ -36,6 +38,12 @@ async function decryptEnv(key, env) {
 async function encryptStr(key, s) {
   const iv = crypto.getRandomValues(new Uint8Array(12));
   return JSON.stringify({ v: 1, iv: b64e(iv), ct: b64e(await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, te.encode(s))) });
+}
+async function fetchEncBin(key, path) { // binary envelope (e.g. apk.enc): decrypted bytes stay in memory only
+  const r = await fetch(path + "?t=" + Date.now(), { cache: "no-store" });
+  if (!r.ok) throw new Error("fetch " + path + " " + r.status);
+  const env = await r.json();
+  return crypto.subtle.decrypt({ name: "AES-GCM", iv: b64d(env.iv) }, key, b64d(env.ct));
 }
 async function fetchEnc(key, path) {
   const r = await fetch(path + "?t=" + Date.now(), { cache: "no-store" });
@@ -82,6 +90,7 @@ async function start(raw, kdf, how) {
   sessionRaw = bridge() ? raw.slice() : null; // only kept (in memory) so the Android app can offer fingerprint unlock
   window.BD = {
     loadData: () => fetchEnc(key, "data.enc"),
+    loadBin: (path) => fetchEncBin(key, path), // ArrayBuffer of a decrypted binary envelope (Android app download)
     get: async (name) => { try { const v = localStorage.getItem(STORE_PREFIX + name); return v ? JSON.parse(await decryptEnv(key, JSON.parse(v))) : null; } catch (e) { return null; } },
     set: async (name, obj) => { try { localStorage.setItem(STORE_PREFIX + name, await encryptStr(key, JSON.stringify(obj))); } catch (e) { /* storage full */ } },
     lock: () => { Object.keys(localStorage).filter((k) => k.startsWith(STORE_PREFIX)).forEach((k) => localStorage.removeItem(k)); wipe(); location.reload(); },
